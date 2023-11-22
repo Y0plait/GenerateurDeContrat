@@ -3,19 +3,27 @@ This module initializes the Flask application and sets up the login manager.
 """
 from flask import Flask
 from flask_login import LoginManager
+import logging as log
 from app.routes.auth import User, UserQueries
 from app.database.db_creation import check_db
-from app.globals import ISDEBUG
+from app.globals import ISDEBUG, LOG_LEVEL
+
+log.basicConfig(filename='app.log', level=LOG_LEVEL, format='%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s')
+log.info("Starting application")
 
 app = Flask(__name__)
 app.config['TEMPLATES_AUTO_RELOAD'] = True
 app.template_folder = '/home/y0plait/OneDrive_a.moulin@eleve.leschartreux.net/B1D/FormumaireV4_Python/app/templates'
 app.config['SECRET_KEY'] = '8cf01dc52d36417b943728237ae7dcf3'
 
+log.info("Application initialized")
+
 login_manager = LoginManager(app)
 login_manager.login_view = 'auth_bp.login'
 login_manager.login_message = 'You must be logged in to access this page.'
 login_manager.init_app(app)
+
+log.info("Login manager initialized")
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -49,4 +57,5 @@ app.register_blueprint(auth.auth_bp)
 app.register_blueprint(navigation.nav_bp)
 
 check_db()
+log.info("Database checked")
 

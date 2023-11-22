@@ -16,10 +16,11 @@ def login():
         # Validate user credentials
         user_queries = UserQueries(DB_PATH)
         user = user_queries.get_by_email(email)
+
+        log.debug(f"email : {email}")
+        log.debug(f"password : {password}")
+        log.debug(f"user : {user}")
         
-        print(f"email : {email}")
-        print(f"password : {password}")
-        print(f"user : {user}")
     
         if user_queries.check_password(user, password):
             login_user(User(user_id=user[0], email=user[3], password=user[4], first_name=user[1], last_name=user[2], created_at=user[5]))
@@ -36,6 +37,7 @@ def login():
 @login_required
 def logout():
     logout_user()
+    print("User logged out")
     return redirect(url_for('nav_bp.index'))
 
 @auth_bp.route('/register', methods=['POST', 'GET'])

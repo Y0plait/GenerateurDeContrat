@@ -6,6 +6,8 @@
 <body>
     <h1>Welcome!</h1>
     <p>Thank you for visiting my website.</p>
-    <img src="{{url_for('static', filename='test.png')}}"
+    <!--<img src="{{url_for('static', filename='nav/test.png')}}">-->
+    <div><p>logged in as {{user}}</p></div>
+    <div><a href="/login">Log in</a><br /><a href="/register">Register</a><br /><a href="/logout">Logout</a></div>
 </body>
 </html>
